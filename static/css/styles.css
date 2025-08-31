@@ -1,0 +1,45 @@
+html, body { height: 100%; }
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+
+.gradient-hero {
+  background: radial-gradient(1000px 400px at 10% 0%, #ffe29f 0%, rgba(255,255,255,0) 60%),
+              radial-gradient(800px 400px at 90% 0%, #ffa99f 0%, rgba(255,255,255,0) 60%),
+              linear-gradient(180deg, #fff, #f7f9ff 30%, #ffffff 100%);
+}
+
+.glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.recipe-steps {
+  counter-reset: step;
+}
+.recipe-steps li {
+  position: relative;
+  padding-left: 3rem;
+}
+.step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: #485fc7;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.navbar.is-transparent { background: transparent; }
+
+@media print {
+  .navbar, .footer, .buttons, .notification { display: none !important; }
+  .box { box-shadow: none; border: none; }
+}
+

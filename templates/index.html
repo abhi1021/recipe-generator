@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero is-fullheight-with-navbar gradient-hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-10-tablet is-8-desktop is-7-widescreen">
+          <div class="box glass animate__animated animate__fadeInUp">
+            <h1 class="title is-3 mb-4"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask for a recipe</h1>
+            {% if not has_api_key %}
+              <article class="message is-warning">
+                <div class="message-body">
+                  Heads up! GOOGLE_API_KEY is not set. Add it to your .env to generate recipes.
+                </div>
+              </article>
+            {% endif %}
+            <form action="{{ url_for('generate') }}" method="POST">
+              <div class="field">
+                <label class="label">What would you like to cook?</label>
+                <div class="control has-icons-left">
+                  <input class="input is-medium" type="text" name="recipe_prompt" placeholder="e.g., Creamy tomato basil pasta, high-protein vegetarian dinner, gluten-free brownies" required>
+                  <span class="icon is-left"><i class="fa-solid fa-utensils"></i></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label class="label">Ingredients you already have (comma or newline separated)</label>
+                <div class="control">
+                  <textarea class="textarea" name="available_ingredients" rows="3" placeholder="e.g., tomato, basil, garlic, olive oil, pasta"></textarea>
+                </div>
+                <p class="help">We'll suggest a shopping list excluding these.</p>
+              </div>
+
+              <div class="columns is-multiline">
+                <div class="column is-4">
+                  <label class="label">Servings</label>
+                  <div class="control">
+                    <input class="input" type="number" name="servings" min="1" placeholder="2">
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <label class="label">Cuisine</label>
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select name="cuisine">
+                        <option value="">Any</option>
+                        <option>Mediterranean</option>
+                        <option>Indian</option>
+                        <option>Italian</option>
+                        <option>Mexican</option>
+                        <option>Chinese</option>
+                        <option>Japanese</option>
+                        <option>American</option>
+                        <option>Middle Eastern</option>
+                        <option>Thai</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <label class="label">Time preference</label>
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select name="time_pref">
+                        <option value="">No preference</option>
+                        <option>Under 20 minutes</option>
+                        <option>Under 40 minutes</option>
+                        <option>Slow-cook acceptable</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-grouped is-grouped-right mt-4">
+                <p class="control"><button class="button is-link is-medium"><i class="fa-solid fa-bolt"></i>&nbsp;Generate</button></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

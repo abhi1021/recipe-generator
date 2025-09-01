@@ -52,13 +52,19 @@ def parse_available_ingredients(raw: str) -> List[str]:
     if not raw:
         return []
     parts = re.split(r"[\n,]", raw)
-    return [normalize_name(p) for p in parts if normalize_name(p)]
+    result = []
+    for p in parts:
+        normalized = normalize_name(p)
+        if normalized and isinstance(normalized, str):
+            result.append(normalized)
+    return result
 
 
 def diff_shopping_list(recipe_ingredients: List[Dict[str, Any]], available: List[str]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """Return (shopping_list, have_list). Match by normalized ingredient name containment.
     """
-    have = set(available)
+    # Ensure all items in available are strings to avoid unhashable type error
+    have = set(str(item) for item in available if item)
     shopping: List[Dict[str, Any]] = []
     have_items: List[Dict[str, Any]] = []
 
@@ -77,31 +83,39 @@ def diff_shopping_list(recipe_ingredients: List[Dict[str, Any]], available: List
 
 
 RECIPE_JSON_SCHEMA: Dict[str, Any] = {
-    "type": "object",
-    "properties": {
-        "title": {"type": "string"},
-        "summary": {"type": "string"},
-        "servings": {"type": "integer"},
-        "estimated_time_minutes": {"type": "integer"},
-        "cuisine": {"type": "string"},
-        "ingredients": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "name": {"type": "string"},
-                    "quantity": {"type": ["number", "string"]},
-                    "unit": {"type": "string"},
-                    "note": {"type": "string"},
-                },
-                "required": ["name"],
-            },
+  "type": "object",
+  "properties": {
+    "title": {"type": "string"},
+    "summary": {"type": "string"},
+    "servings": {"type": "integer"},
+    "estimated_time_minutes": {"type": "integer"},
+    "cuisine": {"type": "string"},
+    "ingredients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "quantity": {"type": "string"},
+          "unit": {"type": "string"},
+          "note": {"type": "string"}
         },
-        "steps": {"type": "array", "items": {"type": "string"}},
-        "nutrition": {"type": "object"},
-        "tips": {"type": "array", "items": {"type": "string"}},
+        "required": ["name"]
+      }
     },
-    "required": ["title", "ingredients", "steps"],
+    "steps": {"type": "array", "items": {"type": "string"}},
+    "nutrition": {
+      "type": "object",
+      "properties": {
+        "calories": {"type": "integer"},
+        "protein_grams": {"type": "number"},
+        "fat_grams": {"type": "number"},
+        "carbohydrates_grams": {"type": "number"}
+      }
+    },
+    "tips": {"type": "array", "items": {"type": "string"}}
+  },
+  "required": ["title", "ingredients", "steps"]
 }
 
 
@@ -182,6 +196,7 @@ def generate():
 
     try:
         response = model.generate_content(prompt, generation_config=generation_config)
+
         text = response.text
         recipe = safe_json_from_text(text)
     except Exception as e:

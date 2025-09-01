@@ -4,7 +4,7 @@
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
-        <div class="column is-10-tablet is-8-desktop is-7-widescreen">
+        <div class="column is-10-tablet is-8-desktop is-10-widescreen">
           <div class="box glass animate__animated animate__fadeInUp">
             <h1 class="title is-3 mb-4"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask for a recipe</h1>
             {% if not has_api_key %}
@@ -18,7 +18,7 @@
               <div class="field">
                 <label class="label">What would you like to cook?</label>
                 <div class="control has-icons-left">
-                  <input class="input is-medium" type="text" name="recipe_prompt" placeholder="e.g., Creamy tomato basil pasta, high-protein vegetarian dinner, gluten-free brownies" required>
+                  <input class="input is-medium" type="text" name="recipe_prompt" id="recipe_prompt" placeholder="e.g., Creamy tomato basil pasta, high-protein vegetarian dinner, gluten-free brownies">
                   <span class="icon is-left"><i class="fa-solid fa-utensils"></i></span>
                 </div>
               </div>
@@ -26,9 +26,9 @@
               <div class="field">
                 <label class="label">Ingredients you already have (comma or newline separated)</label>
                 <div class="control">
-                  <textarea class="textarea" name="available_ingredients" rows="3" placeholder="e.g., tomato, basil, garlic, olive oil, pasta"></textarea>
+                  <textarea class="textarea" name="available_ingredients" id="available_ingredients" rows="3" placeholder="e.g., tomato, basil, garlic, olive oil, pasta"></textarea>
                 </div>
-                <p class="help">We'll suggest a shopping list excluding these.</p>
+                <p class="help"><strong>Note:</strong> Fill at least one field above. We'll suggest a shopping list excluding ingredients you have.</p>
               </div>
 
               <div class="columns is-multiline">
@@ -62,7 +62,7 @@
                   <div class="control">
                     <div class="select is-fullwidth">
                       <select name="time_pref">
-                        <option value="">No preference</option>
+                        <option value="No Preference">Any</option>
                         <option>Under 20 minutes</option>
                         <option>Under 40 minutes</option>
                         <option>Slow-cook acceptable</option>
@@ -73,7 +73,7 @@
               </div>
 
               <div class="field is-grouped is-grouped-right mt-4">
-                <p class="control"><button class="button is-link is-medium"><i class="fa-solid fa-bolt"></i>&nbsp;Generate</button></p>
+                <p class="control"><button class="button is-medium is-primary" id="generate-btn"><i class="fa-solid fa-bolt"></i>&nbsp;Generate</button></p>
               </div>
             </form>
           </div>
@@ -82,5 +82,36 @@
     </div>
   </div>
 </section>
+
+<!-- Loading Animation Overlay -->
+<div id="loading-overlay" class="loading-overlay is-hidden">
+  <div class="loading-content">
+    <div class="chef-animation">
+      <div class="chef-hat">
+        <i class="fa-solid fa-hat-chef"></i>
+      </div>
+      <div class="cooking-items">
+        <div class="cooking-item item-1"><i class="fa-solid fa-carrot"></i></div>
+        <div class="cooking-item item-2"><i class="fa-solid fa-pepper-hot"></i></div>
+        <div class="cooking-item item-3"><i class="fa-solid fa-fish"></i></div>
+        <div class="cooking-item item-4"><i class="fa-solid fa-cheese"></i></div>
+        <div class="cooking-item item-5"><i class="fa-solid fa-apple-whole"></i></div>
+      </div>
+      <div class="cooking-pot">
+        <i class="fa-solid fa-pot-food"></i>
+      </div>
+    </div>
+    <div class="loading-text">
+      <h2 class="title is-4 has-text-white mb-2">Chef is cooking...</h2>
+      <p class="subtitle is-6 has-text-white-bis">Creating your perfect recipe with AI magic!</p>
+      <div class="loading-dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 

@@ -30,44 +30,60 @@
 
           <div class="columns">
             <div class="column is-6">
-              <h2 class="title is-5"><i class="fa-solid fa-list-check"></i>&nbsp;Ingredients</h2>
-              <ul>
+              <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-list-check"></i>&nbsp;Ingredients</h2>
+              <div class="ingredients-grid">
                 {% for ing in recipe.ingredients %}
-                <li class="mb-2">
-                  <label class="checkbox">
-                    <input type="checkbox">&nbsp;
-                    {{ ing.name }}
-                    {% if ing.quantity %} - {{ ing.quantity }}{% endif %}
-                    {% if ing.unit %} {{ ing.unit }}{% endif %}
-                    {% if ing.note %} <em>({{ ing.note }})</em>{% endif %}
-                  </label>
-                </li>
+                <div class="ingredient-card animate-slide-up" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                  <div>
+                    <strong>{{ ing.name }}</strong>
+                    {% if ing.quantity %}<br><small class="has-text-grey">{{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}</small>{% endif %}
+                    {% if ing.note %}<br><small class="has-text-info"><em>{{ ing.note }}</em></small>{% endif %}
+                  </div>
+                </div>
                 {% endfor %}
-              </ul>
+              </div>
             </div>
             <div class="column is-6">
-              <h2 class="title is-5"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Shopping list</h2>
+              <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Shopping list</h2>
               {% if shopping_list %}
-                <ul id="shopping-list">
+                <div id="shopping-list">
                   {% for ing in shopping_list %}
-                  <li class="mb-2">
-                    <i class="fa-regular fa-square"></i>&nbsp;
-                    {{ ing.name }}
-                    {% if ing.quantity %} - {{ ing.quantity }}{% endif %}
-                    {% if ing.unit %} {{ ing.unit }}{% endif %}
-                    {% if ing.note %} <em>({{ ing.note }})</em>{% endif %}
-                  </li>
+                  <div class="shopping-item animate-slide-up" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                    <div class="level is-mobile">
+                      <div class="level-left">
+                        <div class="level-item">
+                          <i class="fa-regular fa-square-check has-text-info"></i>&nbsp;
+                          <strong>{{ ing.name }}</strong>
+                        </div>
+                      </div>
+                      <div class="level-right">
+                        <div class="level-item">
+                          {% if ing.quantity %}<span class="tag is-light">{{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}</span>{% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    {% if ing.note %}<small class="has-text-info"><em>{{ ing.note }}</em></small>{% endif %}
+                  </div>
                   {% endfor %}
-                </ul>
+                </div>
                 <div class="buttons mt-3">
                   <button class="button is-info" id="copy-shopping"><i class="fa-regular fa-clipboard"></i>&nbsp;Copy shopping list</button>
                 </div>
               {% else %}
-                <p class="has-text-success"><i class="fa-solid fa-check"></i> Looks like you have everything already!</p>
+                <div class="notification is-success animate-fade-in">
+                  <i class="fa-solid fa-check"></i> Looks like you have everything already!
+                </div>
               {% endif %}
 
               {% if have_items %}
-                <p class="mt-4 has-text-grey"><strong>Items you have:</strong> {{ have_items | map(attribute='name') | join(', ') }}</p>
+                <div class="notification is-light animate-fade-in mt-4">
+                  <strong><i class="fa-solid fa-house"></i> Items you have:</strong><br>
+                  <div class="tags mt-2">
+                    {% for item in have_items %}
+                    <span class="tag is-success is-light">{{ item.name }}</span>
+                    {% endfor %}
+                  </div>
+                </div>
               {% endif %}
             </div>
           </div>

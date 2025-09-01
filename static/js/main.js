@@ -34,7 +34,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const copy = (text) => navigator.clipboard.writeText(text).then(() => toast('Copied!'));
+  const copy = (text) =>  {
+    if (navigator.clipboard && window.isSecureContext) {
+        // Use modern clipboard API
+        navigator.clipboard.writeText(text).then(() => {
+            toast('Copied!');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            fallbackCopy(text);
+        });
+    } else {
+        // Fallback for non-secure contexts
+        fallbackCopy(text);
+    }
+  };
+
+  function fallbackCopy(text) {
+    // Create a temporary textarea element
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        document.execCommand('copy');
+        console.log('Text copied using fallback method');
+    } catch (err) {
+        console.error('Fallback copy failed: ', err);
+    }
+    
+    document.body.removeChild(textArea);
+    toast('Copied!');
+  }
 
   const fullBtn = document.getElementById('copy-full');
   const shopBtn = document.getElementById('copy-shopping');

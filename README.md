@@ -1,6 +1,6 @@
 # Recipe Genie
 
-A shiny, spanky recipe generator web app built with Python Flask and Google Gemini.
+AI generator web app built with Python Flask and Google Gemini.
 
 Features:
 - No login/registration.

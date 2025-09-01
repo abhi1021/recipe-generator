@@ -31,46 +31,29 @@
           <div class="columns">
             <div class="column is-6">
               <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-list-check"></i>&nbsp;Ingredients</h2>
-              <div class="ingredients-grid">
+              <ul class="compact-list">
                 {% for ing in recipe.ingredients %}
-                <div class="ingredient-card animate-slide-up" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
-                  <div>
-                    <strong>{{ ing.name }}</strong>
-                    {% if ing.quantity %}<br><small class="has-text-grey">{{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}</small>{% endif %}
-                    {% if ing.note %}<br><small class="has-text-info"><em>{{ ing.note }}</em></small>{% endif %}
-                  </div>
-                </div>
+                <li style="margin-bottom:0.25rem; line-height:1.2;">
+                  {{ ing.name }}{% if ing.quantity %} - {{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}{% endif %}{% if ing.note %} <em>({{ ing.note }})</em>{% endif %}
+                </li>
                 {% endfor %}
-              </div>
+              </ul>
             </div>
             <div class="column is-6">
               <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Shopping list</h2>
               {% if shopping_list %}
-                <div id="shopping-list">
+                <ul id="shopping-list" class="compact-list">
                   {% for ing in shopping_list %}
-                  <div class="shopping-item animate-slide-up" style="animation-delay: {{ loop.index0 * 0.1 }}s;">
-                    <div class="level is-mobile">
-                      <div class="level-left">
-                        <div class="level-item">
-                          <i class="fa-regular fa-square-check has-text-info"></i>&nbsp;
-                          <strong>{{ ing.name }}</strong>
-                        </div>
-                      </div>
-                      <div class="level-right">
-                        <div class="level-item">
-                          {% if ing.quantity %}<span class="tag is-light">{{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}</span>{% endif %}
-                        </div>
-                      </div>
-                    </div>
-                    {% if ing.note %}<small class="has-text-info"><em>{{ ing.note }}</em></small>{% endif %}
-                  </div>
+                  <li style="margin-bottom:0.25rem; line-height:1.2;">
+                    {{ ing.name }}{% if ing.quantity %} - {{ ing.quantity }}{% if ing.unit %} {{ ing.unit }}{% endif %}{% endif %}{% if ing.note %} <em>({{ ing.note }})</em>{% endif %}
+                  </li>
                   {% endfor %}
-                </div>
+                </ul>
                 <div class="buttons mt-3">
                   <button class="button is-info" id="copy-shopping"><i class="fa-regular fa-clipboard"></i>&nbsp;Copy shopping list</button>
                 </div>
               {% else %}
-                <div class="notification is-success animate-fade-in">
+                <div class="notification is-success">
                   <i class="fa-solid fa-check"></i> Looks like you have everything already!
                 </div>
               {% endif %}
@@ -91,14 +74,13 @@
           <hr>
 
           <h2 class="title is-5"><i class="fa-solid fa-kitchen-set"></i>&nbsp;Steps</h2>
-          <ol class="recipe-steps">
+          <ul class="recipe-steps">
             {% for step in recipe.steps %}
             <li class="mb-3">
-              <span class="step-number">{{ loop.index }}</span>
-              <span>{{ step }}</span>
+              {{ step }}
             </li>
             {% endfor %}
-          </ol>
+          </ul>
 
           {% if recipe.tips %}
           <div class="content mt-5">

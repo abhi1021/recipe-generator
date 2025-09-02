@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="section gradient-hero">
+
+
+
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-5-desktop is-6-tablet">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <div class="container animate-fade-in animate-fade-out">
+                {% for category, message in messages %}
+                  <div class="notification is-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+      <br>
+        <div class="box glass animate-slide-up has-background-black">
+          <div class="has-text-centered mb-5">
+            <i class="fa-solid fa-user-chef fa-3x has-text-primary mb-3"></i>
+            <h1 class="title is-3 has-text-light">Login to Recipe Genie</h1>
+            <p class="subtitle is-6 has-text-grey">Access your personalized recipe collection</p>
+          </div>
+
+
+
+          <form method="POST" action="{{ url_for('login') }}">
+            <div class="field">
+              <label class="label">Email</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  required
+                >
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Password</label>
+              <div class="control has-icons-left">
+                <input
+                  class="input"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                >
+                <span class="icon is-small is-left">
+                  <i class="fa-solid fa-lock"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <label class="checkbox">
+                  <input type="checkbox" name="remember">
+                  Remember me
+                </label>
+              </div>
+            </div>
+
+            <div class="field">
+              <div class="control">
+                <button class="button is-link is-fullwidth is-medium" type="submit">
+                  <span class="icon">
+                    <i class="fa-solid fa-sign-in-alt"></i>
+                  </span>
+                  <span>Sign In</span>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <hr>
+
+          <div class="has-text-centered">
+{#            <p class="has-text-grey">#}
+{#              Don't have an account? #}
+{#              <a href="{{ url_for('register') }}" class="has-text-link">Sign up here</a>#}
+{#            </p>#}
+            <p class="mt-2">
+{#              <a href="{{ url_for('forgot_password') }}" class="has-text-grey is-size-7">#}
+{#                Forgot your password?#}
+{#              </a>#}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

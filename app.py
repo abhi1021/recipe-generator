@@ -1,14 +1,10 @@
 import os
-import json
-import re
-import sqlite3
-from datetime import datetime
 from typing import Dict, Any, List, Tuple
 from functools import wraps
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from dotenv import load_dotenv
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 # Google Gemini
 import google.generativeai as genai
@@ -58,21 +54,25 @@ def parse_available_ingredients(raw: str) -> List[str]:
     return recipe_service.parse_available_ingredients(raw)
 
 
-def diff_shopping_list(recipe_ingredients: List[Dict[str, Any]], available: List[str]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+def diff_shopping_list(
+    recipe_ingredients: List[Dict[str, Any]], available: List[str]
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     return recipe_service.diff_shopping_list(recipe_ingredients, available)
 
 
 RECIPE_JSON_SCHEMA: Dict[str, Any] = recipe_service.RECIPE_JSON_SCHEMA
 
 
-def build_prompt(user_query: str, available: List[str], servings: str, cuisine: str, time_pref: str) -> str:
-    return recipe_service.build_prompt(user_query, available, servings, cuisine, time_pref)
+def build_prompt(
+    user_query: str, available: List[str], servings: str, cuisine: str, time_pref: str
+) -> str:
+    return recipe_service.build_prompt(
+        user_query, available, servings, cuisine, time_pref
+    )
 
 
 def safe_json_from_text(text: str) -> Dict[str, Any]:
     return recipe_service.safe_json_from_text(text)
-
-
 
 
 def authenticate_user(email: str, password: str) -> bool:
@@ -90,7 +90,9 @@ def login_required(f):
             # flash("Please log in to continue.", "warning")
             return redirect(url_for("login"))
         return f(*args, **kwargs)
+
     return decorated
+
 
 @app.route("/home", methods=["GET"])
 @login_required
@@ -100,21 +102,22 @@ def home():
         has_api_key=bool(GOOGLE_API_KEY),
     )
 
+
 @app.route("/", methods=["GET"])
 def index():
     return redirect(url_for("home"))
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email", "").strip()
         password = request.form.get("password", "").strip()
-        remember = request.form.get("remember")
-        
+
         if not email or not password:
             flash("Please enter both email and password.", "warning")
             return render_template("login.html")
-        
+
         row = get_user_by_email(email)
         if row and check_password_hash(row["password_hash"], password):
             session["user_email"] = row["email"]
@@ -124,7 +127,7 @@ def login():
         else:
             flash("Invalid email or password.", "danger")
             return render_template("login.html")
-    
+
     return render_template("login.html")
 
 
@@ -137,36 +140,36 @@ def register():
         password = request.form.get("password", "").strip()
         confirm_password = request.form.get("confirm_password", "").strip()
         agree_terms = request.form.get("agree_terms")
-        
+
         # Validation
         if not all([name, email, password, confirm_password]):
             flash("Please fill in all fields.", "warning")
             return render_template("register.html")
-        
+
         if password != confirm_password:
             flash("Passwords do not match.", "danger")
             return render_template("register.html")
-        
+
         if len(password) < 8:
             flash("Password must be at least 8 characters long.", "warning")
             return render_template("register.html")
-        
+
         if not agree_terms:
             flash("Please agree to the Terms of Service.", "warning")
             return render_template("register.html")
-        
+
         # Create user
         if create_user(name, email, password):
             session["user_email"] = email
             session["user_name"] = name
             session["logged_in"] = True
-            
+
             flash(f"Account created successfully! Welcome, {name}!", "success")
             return redirect(url_for("index"))
         else:
             flash("An account with this email already exists.", "danger")
             return render_template("register.html")
-    
+
     return render_template("register.html")
 
 
@@ -174,11 +177,11 @@ def register():
 def forgot_password():
     if request.method == "POST":
         email = request.form.get("email", "").strip()
-        
+
         if not email:
             flash("Please enter your email address.", "warning")
             return render_template("forgot_password.html")
-        
+
         row = get_user_by_email(email)
         if row:
             # In production, send actual email with reset link
@@ -187,7 +190,7 @@ def forgot_password():
         else:
             flash("No account found with this email address.", "danger")
             return render_template("forgot_password.html")
-    
+
     return render_template("forgot_password.html")
 
 
@@ -202,7 +205,10 @@ def logout():
 @login_required
 def generate():
     if not GOOGLE_API_KEY:
-        flash("Missing GOOGLE_API_KEY in .env. Please configure it to generate recipes.", "danger")
+        flash(
+            "Missing GOOGLE_API_KEY in .env. Please configure it to generate recipes.",
+            "danger",
+        )
         return redirect(url_for("index"))
 
     user_query = request.form.get("recipe_prompt", "").strip()
@@ -252,4 +258,3 @@ def generate():
 
 if __name__ == "__main__":
     app.run(debug=True)
-

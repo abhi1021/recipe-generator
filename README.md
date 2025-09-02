@@ -59,7 +59,9 @@ Open http://127.0.0.1:5000
 
 ## Scripts
 - Format: `uv run black .`
+  - If you see a warning about VIRTUAL_ENV not matching or "Failed to spawn: black", run `uv sync` first to install dev dependencies, or use `uv run --active black .` to target your currently active venv.
 - Lint: `uv run ruff check .`
+  - Similarly, run `uv run --active ruff check .` if you're using an external active environment.
 
 ## Security
 - Do not commit your `.env`. This repo ships with `.env.example` — keep secrets local.

@@ -1,4 +1,3 @@
-import os
 import sqlite3
 from datetime import datetime
 
@@ -27,7 +26,9 @@ def test_init_db_creates_users_table(temp_db):
 
 
 def test_create_user_success_and_row_persisted(temp_db):
-    ok = auth.create_user(temp_db, name="Alice", email="alice@example.com", password="secret123")
+    ok = auth.create_user(
+        temp_db, name="Alice", email="alice@example.com", password="secret123"
+    )
     assert ok is True
 
     row = auth.get_user_by_email(temp_db, "alice@example.com")

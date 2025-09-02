@@ -1,11 +1,14 @@
 import sqlite3
 from datetime import datetime
 from typing import Optional
+import hashlib
+import os
+import base64
+import hmac
 
 try:
     from werkzeug.security import generate_password_hash, check_password_hash  # type: ignore
 except Exception:  # pragma: no cover - fallback if werkzeug is unavailable
-    import hashlib, os, base64, hmac
 
     def _pbkdf2_hash(password: str, salt: bytes, iterations: int = 260000) -> str:
         dk = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, iterations)

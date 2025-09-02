@@ -10,10 +10,12 @@ def test_get_model(monkeypatch):
 
     class FakeModel:
         def __init__(self, model_name, system_instruction):
-            captured.append({
-                "model_name": model_name,
-                "system_instruction": system_instruction,
-            })
+            captured.append(
+                {
+                    "model_name": model_name,
+                    "system_instruction": system_instruction,
+                }
+            )
 
     mock_genai = types.SimpleNamespace(GenerativeModel=FakeModel)
     monkeypatch.setattr(recipe_service, "genai", mock_genai, raising=True)
@@ -52,7 +54,9 @@ def test_diff_shopping_list():
     available_raw = "tomatoes, onion\n garlic cloves"
     available = recipe_service.parse_available_ingredients(available_raw)
 
-    shopping, have_items = recipe_service.diff_shopping_list(recipe_ingredients, available)
+    shopping, have_items = recipe_service.diff_shopping_list(
+        recipe_ingredients, available
+    )
 
     have_names = {item["name"] for item in have_items}
     shop_names = {item["name"] for item in shopping}
@@ -97,9 +101,7 @@ def test_safe_json_from_text():
     assert data1["ingredients"][0]["name"] == "salt"
     assert data1["steps"] == ["do a"]
 
-    wrapped = (
-        "Here is the recipe: {\"title\": \"Soup\", \"ingredients\": [], \"steps\": [\"boil\"]} Thanks!"
-    )
+    wrapped = 'Here is the recipe: {"title": "Soup", "ingredients": [], "steps": ["boil"]} Thanks!'
     data2 = recipe_service.safe_json_from_text(wrapped)
     assert data2["title"] == "Soup"
     assert data2["steps"] == ["boil"]

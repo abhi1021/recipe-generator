@@ -6,12 +6,18 @@ from typing import Dict, Any, List, Tuple
 # Google Gemini (configured in app.py). Import lazily/fallback for test environments without the package.
 try:
     import google.generativeai as genai  # type: ignore
-except Exception:  # pragma: no cover - fallback for environments without google-generativeai
+except (
+    Exception
+):  # pragma: no cover - fallback for environments without google-generativeai
+
     class _GenAIStub:
         class GenerativeModel:
             def __init__(self, *args, **kwargs):
                 # This will be monkeypatched in tests; if used directly, raise to signal misconfiguration.
-                raise RuntimeError("google-generativeai is not installed; configure genai in app or monkeypatch in tests")
+                raise RuntimeError(
+                    "google-generativeai is not installed; configure genai in app or monkeypatch in tests"
+                )
+
     genai = _GenAIStub()  # type: ignore
 
 
@@ -55,8 +61,7 @@ def diff_shopping_list(
     recipe_ingredients: List[Dict[str, Any]],
     available: List[str],
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Return (shopping_list, have_list). Match by normalized ingredient name containment.
-    """
+    """Return (shopping_list, have_list). Match by normalized ingredient name containment."""
     have = set(str(item) for item in available if item)
     shopping: List[Dict[str, Any]] = []
     have_items: List[Dict[str, Any]] = []
@@ -76,39 +81,39 @@ def diff_shopping_list(
 
 
 RECIPE_JSON_SCHEMA: Dict[str, Any] = {
-  "type": "object",
-  "properties": {
-    "title": {"type": "string"},
-    "summary": {"type": "string"},
-    "servings": {"type": "integer"},
-    "estimated_time_minutes": {"type": "integer"},
-    "cuisine": {"type": "string"},
-    "ingredients": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {"type": "string"},
-          "quantity": {"type": "string"},
-          "unit": {"type": "string"},
-          "note": {"type": "string"}
+    "type": "object",
+    "properties": {
+        "title": {"type": "string"},
+        "summary": {"type": "string"},
+        "servings": {"type": "integer"},
+        "estimated_time_minutes": {"type": "integer"},
+        "cuisine": {"type": "string"},
+        "ingredients": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "quantity": {"type": "string"},
+                    "unit": {"type": "string"},
+                    "note": {"type": "string"},
+                },
+                "required": ["name"],
+            },
         },
-        "required": ["name"]
-      }
+        "steps": {"type": "array", "items": {"type": "string"}},
+        "nutrition": {
+            "type": "object",
+            "properties": {
+                "calories": {"type": "integer"},
+                "protein_grams": {"type": "number"},
+                "fat_grams": {"type": "number"},
+                "carbohydrates_grams": {"type": "number"},
+            },
+        },
+        "tips": {"type": "array", "items": {"type": "string"}},
     },
-    "steps": {"type": "array", "items": {"type": "string"}},
-    "nutrition": {
-      "type": "object",
-      "properties": {
-        "calories": {"type": "integer"},
-        "protein_grams": {"type": "number"},
-        "fat_grams": {"type": "number"},
-        "carbohydrates_grams": {"type": "number"}
-      }
-    },
-    "tips": {"type": "array", "items": {"type": "string"}}
-  },
-  "required": ["title", "ingredients", "steps"]
+    "required": ["title", "ingredients", "steps"],
 }
 
 

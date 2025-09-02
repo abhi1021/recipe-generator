@@ -22,5 +22,6 @@ py-modules = ["app"]
 dev-dependencies = [
   "black>=24.4.2",
   "ruff>=0.5.4",
+  "pytest"
 ]
 

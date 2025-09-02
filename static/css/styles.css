@@ -14,6 +14,7 @@
   --pastel-sky: #a3e6ff;
   --pastel-yellow: #ffe6a3;
   --pastel-coral: #ffd1b3;
+  --pastel-coral-§: #ee76a8;
 }
 
 * {
@@ -32,6 +33,11 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.title {
+    font-size: large;
+    padding-left: 10px;
 }
 
 .gradient-hero {
@@ -288,17 +294,49 @@ main {
   margin: 0;
 }
 
+:root {
+  /* Default hold seconds for notifications */
+  --notify-hold-secs: 3s;
+  --notify-fade-in: 0.6s;
+  --notify-fade-out: 4s;
+}
+
+/*
+  Usage:
+  - Add class .animate-fade-in to your notification element.
+  - Optionally override --notify-hold-secs on the element to control how long it stays fully visible before fading out, e.g.:
+      <div class="notification animate-fade-in" style="--notify-hold-secs: 5s">...
+  - The animation will: fade in -> hold visible for N seconds -> fade out.
+*/
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-in-out;
+  /* Chain two animations: fade in, then fade out after a hold period */
+  --_fade-in: var(--notify-fade-in, 0.6s);
+  --_hold: var(--notify-hold-secs, 3s);
+  --_fade-out: var(--notify-fade-out, 3s);
+  --_delay: calc(var(--_fade-in) + var(--_hold));
+  animation:
+    fadeIn var(--_fade-in) ease-in-out forwards,
+    fadeOut var(--_fade-out) ease-in-out forwards var(--_delay);
+}
+
+/* Legacy explicit fade-out utility remains available */
+.animate-fade-out {
+  animation: fadeOut var(--notify-fade-out, 3s) ease-in-out forwards;
 }
 
 .animate-slide-up {
   animation: slideUp 0.6s ease-out;
 }
 
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes slideUp {
@@ -474,6 +512,74 @@ main {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* Login Form Specific Styles */
+.login-form .field {
+  margin-bottom: 1.5rem;
+}
+
+.login-form .input {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
+
+.login-form .button {
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.login-form .checkbox {
+  color: #6b6b6b;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(167, 213, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.auth-icon {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.password-strength .strength-bar {
+  height: 4px;
+  border-radius: 2px;
+  background: #e0e0e0;
+  overflow: hidden;
+}
+
+.password-strength .strength-fill {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.password-strength .strength-fill.weak {
+  width: 33%;
+  background: #ff6b6b;
+}
+
+.password-strength .strength-fill.medium {
+  width: 66%;
+  background: #ffd93d;
+}
+
+.password-strength .strength-fill.strong {
+  width: 100%;
+  background: #6bcf7f;
 }
 
 @media (max-width: 768px) {

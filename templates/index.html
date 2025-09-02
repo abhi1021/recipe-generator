@@ -5,7 +5,7 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-10-tablet is-8-desktop is-10-widescreen">
-          <div class="box glass animate__animated animate__fadeInUp">
+          <div class="box glass animate__animated animate__fadeInUp has-background-black">
             <h1 class="title is-3 mb-4"><i class="fa-solid fa-wand-magic-sparkles"></i> Ask for a recipe</h1>
             {% if not has_api_key %}
               <article class="message is-warning">
@@ -18,7 +18,7 @@
               <div class="field">
                 <label class="label">What would you like to cook?</label>
                 <div class="control has-icons-left">
-                  <input class="input is-medium" type="text" name="recipe_prompt" id="recipe_prompt" placeholder="e.g., Creamy tomato basil pasta, high-protein vegetarian dinner, gluten-free brownies">
+                  <input class="input is-medium has-background-black" type="text" name="recipe_prompt" id="recipe_prompt" placeholder="e.g., Creamy tomato basil pasta, high-protein vegetarian dinner, gluten-free brownies">
                   <span class="icon is-left"><i class="fa-solid fa-utensils"></i></span>
                 </div>
               </div>
@@ -26,7 +26,7 @@
               <div class="field">
                 <label class="label">Ingredients you already have (comma or newline separated)</label>
                 <div class="control">
-                  <textarea class="textarea" name="available_ingredients" id="available_ingredients" rows="3" placeholder="e.g., tomato, basil, garlic, olive oil, pasta"></textarea>
+                  <textarea class="textarea has-background-black" name="available_ingredients" id="available_ingredients" rows="3" placeholder="e.g., tomato, basil, garlic, olive oil, pasta"></textarea>
                 </div>
                 <p class="help"><strong>Note:</strong> Fill at least one field above. We'll suggest a shopping list excluding ingredients you have.</p>
               </div>
@@ -35,14 +35,14 @@
                 <div class="column is-4">
                   <label class="label">Servings</label>
                   <div class="control">
-                    <input class="input" type="number" name="servings" min="1" placeholder="2">
+                    <input class="input has-background-black" type="number" name="servings" min="1" placeholder="2">
                   </div>
                 </div>
                 <div class="column is-4">
                   <label class="label">Cuisine</label>
                   <div class="control">
                     <div class="select is-fullwidth">
-                      <select name="cuisine">
+                      <select class="has-background-black" name="cuisine">
                         <option value="">Any</option>
                         <option>Mediterranean</option>
                         <option>Indian</option>
@@ -61,7 +61,7 @@
                   <label class="label">Time preference</label>
                   <div class="control">
                     <div class="select is-fullwidth">
-                      <select name="time_pref">
+                      <select class="has-background-black" name="time_pref">
                         <option value="No Preference">Any</option>
                         <option>Under 20 minutes</option>
                         <option>Under 40 minutes</option>

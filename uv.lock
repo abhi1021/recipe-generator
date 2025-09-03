@@ -712,12 +712,13 @@ wheels = [
 ]
 
 [[package]]
-name = "recipe-gen"
+name = "recipe-generator"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "flask" },
     { name = "google-generativeai" },
+    { name = "pytest" },
     { name = "python-dotenv" },
 ]
 
@@ -732,6 +733,7 @@ dev = [
 requires-dist = [
     { name = "flask", specifier = ">=3.0.0" },
     { name = "google-generativeai", specifier = ">=0.7.2" },
+    { name = "pytest" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
 ]
 

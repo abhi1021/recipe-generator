@@ -30,7 +30,7 @@
 
           <div class="columns">
             <div class="column is-6">
-              <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-list-check"></i>&nbsp;Ingredients</h2>
+              <h2 class="title is-5"><i class="fa-solid fa-list-check"></i>&nbsp;Ingredients</h2>
               <ul class="compact-list">
                 {% for ing in recipe.ingredients %}
                 <li style="margin-bottom:0.25rem; line-height:1.2;">
@@ -40,7 +40,7 @@
               </ul>
             </div>
             <div class="column is-6">
-              <h2 class="title is-5 animate-fade-in"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Shopping list</h2>
+              <h2 class="title is-5"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Shopping list</h2>
               {% if shopping_list %}
                 <ul id="shopping-list" class="compact-list">
                   {% for ing in shopping_list %}
@@ -59,11 +59,11 @@
               {% endif %}
 
               {% if have_items %}
-                <div class="notification is-light animate-fade-in mt-4">
+                <div class="is-transparent mt-4">
                   <strong><i class="fa-solid fa-house"></i> Items you have:</strong><br>
                   <div class="tags mt-2">
                     {% for item in have_items %}
-                    <span class="tag is-success is-light">{{ item.name }}</span>
+                    <span class=" is-success is-light">{{ item.name }}</span><br>
                     {% endfor %}
                   </div>
                 </div>

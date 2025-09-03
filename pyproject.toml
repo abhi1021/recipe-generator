@@ -1,5 +1,5 @@
 [project]
-name = "recipe_gen"
+name = "recipe_generator"
 version = "0.1.0"
 description = "Shiny recipe generator using Flask and Google Gemini"
 readme = "README.md"
@@ -8,7 +8,8 @@ authors = [{ name = "Your Name" }]
 dependencies = [
   "Flask>=3.0.0",
   "python-dotenv>=1.0.0",
-  "google-generativeai>=0.7.2"
+  "google-generativeai>=0.7.2",
+  "pytest"
 ]
 
 [build-system]

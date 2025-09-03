@@ -85,6 +85,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   if (printBtn) printBtn.addEventListener('click', () => window.print());
 
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const themeIcon = themeToggle.querySelector('i');
+
+  const applyTheme = (theme) => {
+    if (theme === 'light') {
+      body.classList.add('light-theme');
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    } else {
+      body.classList.remove('light-theme');
+      themeIcon.classList.remove('fa-sun');
+      themeIcon.classList.add('fa-moon');
+    }
+  };
+
+  // Apply saved theme on page load
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  applyTheme(savedTheme);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
+
   // Confetti celebration on result page
   const result = document.getElementById('result-page');
   if (result && result.dataset.celebrate && window.confetti) {

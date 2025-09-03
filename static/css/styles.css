@@ -616,3 +616,78 @@ main {
   }
 }
 
+/* Light Theme */
+body.light-theme {
+  background: #ffffff;
+  color: #363636;
+}
+
+body.light-theme .navbar.is-spaced,
+body.light-theme .footer {
+  background-color: #f5f5f5;
+  color: #363636;
+}
+
+body.light-theme .box {
+  background: #ffffff;
+  border-color: #e5e5e5;
+  color: #363636;
+}
+
+body.light-theme .button.is-link {
+  background: var(--primary-gradient);
+  color: #ffffff;
+}
+
+body.light-theme .button.is-info {
+  background: var(--success-gradient);
+  color: #ffffff;
+}
+
+body.light-theme .input,
+body.light-theme .textarea,
+body.light-theme .select select {
+  background-color: #ffffff;
+  border-color: #dbdbdb;
+  color: #363636;
+}
+
+body.light-theme .input::placeholder,
+body.light-theme .textarea::placeholder {
+  color: #7a7a7a;
+}
+
+body.light-theme .recipe-steps li {
+  border-bottom-color: #e5e5e5;
+}
+
+body.light-theme .recipe-steps li:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .step-number {
+  color: #ffffff;
+}
+
+body.light-theme .navbar-brand .navbar-item {
+  color: #363636;
+}
+
+body.light-theme a {
+  color: #3273dc;
+}
+
+body.light-theme .footer a {
+    color: #3273dc;
+}
+
+body.light-theme .has-text-white-ter {
+    color: #363636 !important;
+}
+
+body.light-theme .navbar-link, body.light-theme a.navbar-item {
+    color: #363636;
+}
+body.light-theme .navbar-link:not(.is-arrowless)::after {
+    border-color: #363636;
+}

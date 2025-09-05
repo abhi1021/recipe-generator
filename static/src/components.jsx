@@ -31,6 +31,14 @@ const ThemeToggle = () => {
   );
 };
 
+const Footer = () => {
+    return (
+        <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 dark:border-gray-600">
+            <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">Magic Recipes • Bharade.com • 2025</span>
+        </footer>
+    );
+};
+
 const Home = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
@@ -39,7 +47,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
-              <h1 className="text-xl font-bold">Recipe Generator</h1>
+              <h1 className="text-xl font-bold">Magic Recipes</h1>
             </div>
             <div className="flex items-center">
               <a href="/logout" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">Logout</a>
@@ -79,7 +87,18 @@ const Home = () => {
             <div>
               <label htmlFor="cuisine" className="block text-sm font-medium">Cuisine</label>
               <div className="mt-1">
-                <input type="text" name="cuisine" id="cuisine" className="py-3 px-4 block w-full shadow-sm focus:ring-primary-500 focus:border-primary-500 border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600" placeholder="e.g., Italian" />
+                <select id="cuisine" name="cuisine" className="py-3 px-4 block w-full shadow-sm focus:ring-primary-500 focus:border-primary-500 border-gray-300 rounded-md dark:bg-gray-700 dark:border-gray-600">
+                  <option>Any</option>
+                  <option>Italian</option>
+                  <option>Mexican</option>
+                  <option>Chinese</option>
+                  <option>Indian</option>
+                  <option>American</option>
+                  <option>Japanese</option>
+                  <option>French</option>
+                  <option>Thai</option>
+                  <option>Spanish</option>
+                </select>
               </div>
             </div>
             <div className="sm:col-span-2">
@@ -96,6 +115,7 @@ const Home = () => {
           </div>
         </form>
       </main>
+      <Footer />
     </div>
   );
 };
@@ -138,6 +158,7 @@ const Login = () => {
           Don't have an account? <a href="/register" className="font-medium text-primary-600 hover:text-primary-500">Sign up</a>
         </p>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -183,6 +204,7 @@ const Register = () => {
           Already have an account? <a href="/login" className="font-medium text-primary-600 hover:text-primary-500">Log in</a>
         </p>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -199,7 +221,7 @@ const Result = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex-shrink-0">
-              <a href="/home" className="text-xl font-bold">Recipe Generator</a>
+              <a href="/home" className="text-xl font-bold">Magic Recipes</a>
             </div>
             <div className="flex items-center">
               <a href="/logout" className="text-sm font-medium text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100">Logout</a>
@@ -262,23 +284,7 @@ const Result = () => {
             </a>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
-
-const App = () => {
-    const path = window.location.pathname;
-    if (path === '/login') {
-        return <Login />;
-    }
-    if (path === '/register') {
-        return <Register />;
-    }
-    if (path.startsWith('/generate')) {
-        // The result page is shown for any /generate path
-        return <Result />;
-    }
-    return <Home />;
-}
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Your Recipe: {{ recipe.title }}{% endblock %}
+
+{% block content %}
+<div id="result-root"></div>
+
+<script type="text/babel" src="{{ url_for('static', filename='js/components/Result.js') }}"></script>
+<script type="text/babel">
+    const recipeData = {{ recipe|tojson }};
+    const queryData = {{ query|tojson }};
+    const shoppingListData = {{ shopping_list|tojson }};
+    const haveItemsData = {{ have_items|tojson }};
+
+    const container = document.getElementById('result-root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Result recipe={recipeData} query={queryData} shoppingList={shoppingListData} haveItems={haveItemsData} />);
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div id="home-root"></div>
+
+<script type="text/babel" src="{{ url_for('static', filename='js/components/Home.js') }}"></script>
+<script type="text/babel">
+    const container = document.getElementById('home-root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Home hasApiKey={{ has_api_key|tojson }} />);
+</script>
+{% endblock %}

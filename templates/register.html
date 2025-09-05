@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div id="register-root"></div>
+
+<script type="text/babel" src="{{ url_for('static', filename='js/components/Register.js') }}"></script>
+<script type="text/babel">
+    const container = document.getElementById('register-root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Register />);
+</script>
+{% endblock %}

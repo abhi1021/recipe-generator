@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div id="login-root"></div>
+
+<script type="text/babel" src="{{ url_for('static', filename='js/components/Login.js') }}"></script>
+<script type="text/babel">
+    const container = document.getElementById('login-root');
+    const root = ReactDOM.createRoot(container);
+    root.render(<Login />);
+</script>
+{% endblock %}

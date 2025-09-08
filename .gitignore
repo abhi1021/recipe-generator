@@ -23,3 +23,8 @@ dist/
 .idea/
 
 /docs/
+
+# build artifacts
+lambda.zip
+/instance/
+*.sqlite

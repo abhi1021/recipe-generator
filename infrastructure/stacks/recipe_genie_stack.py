@@ -11,14 +11,14 @@ from aws_cdk import (
 )
 from constructs import Construct
 
-class InfrastructureStack(Stack):
+class RecipeGenieStack(Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # Read configuration
         config = configparser.ConfigParser()
-        config.read('infrastructure/config.ini')
+        config.read('config.ini')
 
         aws_config = config['aws']
         domain_name = aws_config['domain_name']

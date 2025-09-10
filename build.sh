@@ -121,7 +121,13 @@ copy_application_files() {
         cp -r templates "$BUILD_DIR/"
         print_success "Copied templates directory"
     fi
-    
+
+    # Copy lib files
+    if [ -d "lib" ]; then
+        cp -r lib "$BUILD_DIR/"
+        print_success "Copied lib directory"
+    fi
+
     # Copy static files
     if [ -d "static" ]; then
         cp -r static "$BUILD_DIR/"

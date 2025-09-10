@@ -33,17 +33,17 @@ fi
 # 3. Create / Update Secret in Secrets Manager
 # -----------------------------
 echo "🔐 Creating/Updating secret '${GOOGLE_API_KEY}' in Secrets Manager..."
-if aws secretsmanager describe-secret --region "$AWS_REGION" --secret-id "$GOOGLE_API_KEY" >/dev/null 2>&1; then
+if aws secretsmanager describe-secret --region "$AWS_REGION" --secret-id "api-key" >/dev/null 2>&1; then
   aws secretsmanager update-secret \
     --region "$AWS_REGION" \
-    --secret-id "$GOOGLE_API_KEY" \
+    --secret-id "api-key" \
     --secret-string "$GOOGLE_API_KEY" \
     > /dev/null
   echo "✅ Secret updated."
 else
   aws secretsmanager create-secret \
     --region "$AWS_REGION" \
-    --name "$GOOGLE_API_KEY" \
+    --name "api-key" \
     --secret-string "$GOOGLE_API_KEY" \
     > /dev/null
   echo "✅ Secret created."

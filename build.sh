@@ -189,10 +189,8 @@ cleanup_build_dir() {
 create_lambda_zip() {
     print_step "Creating Lambda deployment package..."
     
-    cd "$BUILD_DIR"
-    zip -r "../$LAMBDA_ZIP" . -x "*.pyc" "__pycache__/*" "*.dist-info/*" "*.egg-info/*"
-    cd ..
-    
+    zip -r "$LAMBDA_ZIP" $BUILD_DIR
+
     # Get zip file size
     size=$(stat -f%z "$LAMBDA_ZIP" 2>/dev/null || stat -c%s "$LAMBDA_ZIP" 2>/dev/null || echo "unknown")
     size_mb=$((size / 1024 / 1024))

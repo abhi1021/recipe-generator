@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pytest
 
-import auth_service as auth
+from lib import auth_service as auth
 
 
 @pytest.fixture()

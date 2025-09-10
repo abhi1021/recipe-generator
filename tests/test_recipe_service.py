@@ -1,7 +1,7 @@
 import json
 import types
 
-import recipe_service
+from lib import recipe_service
 
 
 def test_get_model(monkeypatch):

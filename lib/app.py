@@ -8,8 +8,7 @@ from werkzeug.security import check_password_hash
 
 # Google Gemini
 import google.generativeai as genai
-import auth_service
-import recipe_service
+from lib import auth_service, recipe_service, read_secret
 
 load_dotenv()
 
@@ -33,7 +32,9 @@ def get_user_by_email(email: str):
 # Initialize DB on startup
 init_db()
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+GOOGLE_API_KEY = read_secret.get_secret()
+
+print(f"GOOGLE_API_KEY: {GOOGLE_API_KEY[0:4]}...")
 
 if GOOGLE_API_KEY:
     genai.configure(api_key=GOOGLE_API_KEY)

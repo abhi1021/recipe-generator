@@ -136,39 +136,34 @@ ZIP_FILE="lambda.zip"
 # -----------------------------
 # 6. Create / Update Lambda Function
 # -----------------------------
-#echo "🚀 Deploying Lambda function '${LAMBDA_NAME}'..."
-#if aws lambda get-function --function-name "$LAMBDA_NAME" >/dev/null 2>&1; then
-#  # Update existing function
-#  aws lambda update-function-code \
-#    --function-name "$LAMBDA_NAME" \
-#    --zip-file "fileb://$ZIP_FILE" \
-#    > /dev/null
-#  aws lambda update-function-configuration \
-#    --function-name "$LAMBDA_NAME" \
-#    --role "$ROLE_ARN" \
-#    --environment Variables="{GOOGLE_API_KEY=${GOOGLE_API_KEY}}" \
-#    > /dev/null
-#  echo "✅ Lambda function updated."
-#else
-#  # Create new function
-#  aws lambda create-function \
-#    --function-name "$LAMBDA_NAME" \
-#    --runtime python3.12 \
-#    --role "$ROLE_ARN" \
-#    --handler lambda_function.lambda_handler \
-#    --zip-file "fileb://$ZIP_FILE" \
-#    --description "recipes‑genie Lambda – reads secret from Secrets Manager" \
-#    > /dev/null
-#  echo "✅ Lambda function created."
+echo "🚀 Deploying Lambda function '${LAMBDA_NAME}'..."
+if aws lambda get-function --function-name "$LAMBDA_NAME" >/dev/null 2>&1; then
+  # Update existing function
+  aws lambda update-function-code \
+    --function-name "$LAMBDA_NAME" \
+    --zip-file "fileb://$ZIP_FILE" \
+    > /dev/null
+  aws lambda update-function-configuration \
+    --function-name "$LAMBDA_NAME" \
+    --role "$ROLE_ARN" \
+    --environment Variables="{GOOGLE_API_KEY=${GOOGLE_API_KEY}}" \
+    > /dev/null
+  echo "✅ Lambda function updated."
+else
+  # Create new function
+  aws lambda create-function \
+    --function-name "$LAMBDA_NAME" \
+    --runtime python3.12 \
+    --role "$ROLE_ARN" \
+    --handler lambda_handler.lambda_handler \
+    --zip-file "fileb://$ZIP_FILE" \
+    --description "recipes‑genie Lambda – reads secret from Secrets Manager" \
+    > /dev/null
+  echo "✅ Lambda function created."
 #fi
 
-echo "aws lambda create-function \
-    --function-name $LAMBDA_NAME \
-    --runtime python3.12 \
-    --role $ROLE_ARN \
-    --handler lambda_function.lambda_handler \
-    --zip-file fileb://$ZIP_FILE \
-    --description 'recipes‑genie Lambda – reads secret from Secrets Manager'"
+
+
 
 # -----------------------------
 # 7. Clean up temporary files

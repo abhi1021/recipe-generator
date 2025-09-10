@@ -79,7 +79,7 @@ cat > "$POLICY_FILE" <<EOF
         "secretsmanager:GetSecretValue",
         "secretsmanager:DescribeSecret"
       ],
-      "Resource": "arn:aws:secretsmanager:$AWS_REGION:*:secret:$GOOGLE_API_KEY-*"
+      "Resource": "arn:aws:secretsmanager:$AWS_REGION:*:secret:api-key-*"
     },
     {
       "Effect": "Allow",

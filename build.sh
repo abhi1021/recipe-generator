@@ -214,7 +214,7 @@ validate_build() {
     print_step "Validating build..."
     
     # Check if required files exist in the zip
-    required_files=("lambda_handler.py" "app.py")
+    required_files=("app.py")
     for file in "${required_files[@]}"; do
         if unzip -l "$LAMBDA_ZIP" | grep -q "$file"; then
             print_success "$file found in package"

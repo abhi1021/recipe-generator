@@ -10,7 +10,7 @@ dependencies = [
   "python-dotenv>=1.0.0",
   "google-generativeai>=0.7.2",
   "pytest",
-  "protobuf~=3.19.0"
+  "protobuf"
 ]
 
 [build-system]

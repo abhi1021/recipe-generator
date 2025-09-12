@@ -257,5 +257,14 @@ def generate():
     )
 
 
+# Lambda entrypoint (for AWS Lambda deployment with API Gateway)
+def handler(event, context):
+    from mangum import Mangum
+
+    asgi_app = app.wsgi_app  # Flask is WSGI, wrap into ASGI
+    handler = Mangum(asgi_app)
+    return handler(event, context)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
